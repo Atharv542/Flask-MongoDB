@@ -242,4 +242,24 @@ The official MongoDB image reads `MONGO_INITDB_ROOT_USERNAME` and `MONGO_INITDB_
 4. Watch average CPU rise above the 70% target. The HPA then adds Flask replicas (up to 5).
 5. Stop the load with Ctrl+C. After the stabilisation window (about 5 minutes) the HPA scales back down to the minimum of 2.
 
-The results of these tests are demonstrated live. 
+### Autoscaling results
+
+**Setup:** HPA targets 70% average CPU (of the 200m request), min 2 and max 5 replicas. Load was generated from inside the cluster with busybox pods calling `/data` in a loop.
+
+| Event | Observed |
+|---|---|
+| Baseline (no load) | 2 replicas, CPU about __% |
+| Load started | __:__ |
+| CPU first above 70% | __:__ (peak __%) |
+| Replicas increased | __:__ (from 2 to __) |
+| Load stopped | __:__ |
+| Back to 2 replicas | __:__ (about __ minutes later) |
+
+**1. Idle baseline**
+![HPA idle](docs/screenshots/01-hpa-idle.png)
+
+**2. CPU above the 70% target**
+![HPA CPU high](docs/screenshots/02-hpa-cpu-high.png)
+
+**3. Scaled up**
+![HPA scaled up](docs/screenshots/03-hpa-scaled-up.png)
