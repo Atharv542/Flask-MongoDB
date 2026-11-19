@@ -15,7 +15,7 @@ def build_mongo_uri():
     user = os.environ.get("MONGODB_USERNAME")
     pwd = os.environ.get("MONGODB_PASSWORD")
     # 2. Authenticated connection (Kubernetes)
-    if user and pwd:
+    if user and pwd:                         
         return f"mongodb://{quote_plus(user)}:{quote_plus(pwd)}@{host}:{port}/?authSource=admin"
     # 3. Unauthenticated (local dev)
     return f"mongodb://{host}:{port}/"
